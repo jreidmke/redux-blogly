@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import data from './dummyPosts.json';
 
-const CommentForm = ({addComment, id}) => {//we will be adding a comment to the comment state on our Post component
+const CommentForm = ({addComment, postId, id}) => {//we will be adding a comment to the comment state on our Post component
     const INITIAL_STATE = {
         comment: ""
     };
@@ -14,11 +15,17 @@ const CommentForm = ({addComment, id}) => {//we will be adding a comment to the 
             ...formData,
             [name]: value
         }));
+        console.log(formData);
     };
 
     const submit = e => {
         e.preventDefault();
-        addComment({...formData, id: uuidv4()});
+        // addComment({...formData, id: uuidv4()});
+        const selectedPost = data.find(
+            p=> p.id === postId
+        );
+        selectedPost.comments.push({...formData, id: uuidv4()});
+        console.log(selectedPost.comments);
         setFormData(INITIAL_STATE);
     }
 

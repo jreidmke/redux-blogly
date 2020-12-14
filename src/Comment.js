@@ -1,6 +1,6 @@
-const Comment = ({comment}) => {
+const Comment = ({comment, handleRemove, id, postId}) => {
     return(
-        <p>{comment}</p>
+        <li><button onClick={() => handleRemove(id)}>X</button>{comment}</li>
     )
 }
 
