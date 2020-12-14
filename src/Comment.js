@@ -1,6 +1,6 @@
-const Comment = ({text}) => {
+const Comment = ({comment}) => {
     return(
-        <p>{text}</p>
+        <p>{comment}</p>
     )
 }
 
