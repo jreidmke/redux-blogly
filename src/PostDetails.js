@@ -26,8 +26,10 @@ const PostDetails = ({post}) => {
     const submit = e => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
+        const postIdx = data.indexOf(data.find(p => p.id === post.id));
+        data.splice(postIdx, 1);
         const tempId = uuidv4();
-        data.push({...formData, id: tempId});
+        data.push({...formData, id: tempId, comments: []});
         history.push(`/${tempId}`);
         setIsEditing(false);
         // setFormData(INITIAL_STATE);

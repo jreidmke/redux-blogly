@@ -5,7 +5,7 @@ import './PostForm.css';
 import data from './dummyPosts.json';
 
 const PostForm = ({createPost}) => {
-    
+
     const history = useHistory();
 
     const INITIAL_STATE = {
@@ -27,7 +27,7 @@ const PostForm = ({createPost}) => {
     const submit = e => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
-        data.push({...formData, id: uuidv4()});
+        data.push({...formData, id: uuidv4(), comments: []});
         history.push("/");
         // setFormData(INITIAL_STATE);
     };
