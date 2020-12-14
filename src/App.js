@@ -10,7 +10,7 @@ function App() {
 
   const createComment = (newComment) => setComments([...comments, newComment]);
 
-  const commentsRender = comments.map(c => <Comment comment={c.comment}/>)
+  const commentsRender = comments.map(c => <Comment comment={c.comment} key={c.id}/>)
 
   return (
     <div className="App">
