@@ -15,16 +15,14 @@ const CommentForm = ({addComment, postId, id}) => {//we will be adding a comment
             ...formData,
             [name]: value
         }));
-        console.log(formData);
     };
 
     const submit = e => {
         e.preventDefault();
         // addComment({...formData, id: uuidv4()});
         const selectedPost = data[postId];
-        console.log(selectedPost);
+        console.log(postId);
         selectedPost.comments.push({...formData, id: uuidv4()});
-        console.log(selectedPost.comments);
         setFormData(INITIAL_STATE);
     }
 
