@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import './PostForm.css';
 
 const PostForm = ({createPost}) => {
     const INITIAL_STATE = {
@@ -35,7 +36,7 @@ const PostForm = ({createPost}) => {
             value={formData.title}
             id='title'
             />
-
+<br></br>
             <label htmlFor="description">Post Description</label>
             <input
             onChange={handleChange}
@@ -44,15 +45,17 @@ const PostForm = ({createPost}) => {
             value={formData.description}
             id="description"
             />
+<br></br>
 
             <label htmlFor="post">Post</label>
-            <input
+            <textarea
             onChange={handleChange}
             name="post"
-            type="text-area"
+            type="text"
             value={formData.post}
             id="post"
             />
+<br></br>
 
             <button>Submit</button>
 
@@ -60,4 +63,4 @@ const PostForm = ({createPost}) => {
     )
 }
 
-export default PostForm; 
+export default PostForm;
