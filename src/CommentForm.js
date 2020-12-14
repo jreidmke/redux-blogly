@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const CommentForm = ({addComment}) => {//we will be adding a comment to the comment state on our Post component
+const CommentForm = ({addComment, id}) => {//we will be adding a comment to the comment state on our Post component
     const INITIAL_STATE = {
         comment: ""
     };
@@ -18,7 +18,7 @@ const CommentForm = ({addComment}) => {//we will be adding a comment to the comm
 
     const submit = e => {
         e.preventDefault();
-        addComment(...formData, id=uuidv4());
+        addComment({...formData, id: uuidv4()});
         setFormData(INITIAL_STATE);
     }
 
