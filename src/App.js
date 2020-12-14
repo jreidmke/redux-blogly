@@ -17,12 +17,14 @@ function App() {
 
   const addPost = (newPost) => setPosts([...posts, newPost]);
 
-  const commentsRender = comments.map(c => <Comment comment={c.comment} key={c.id}/>)
+  const commentsRender = comments.map(c => <Comment comment={c.comment} key={c.id}/>);
+
+  const postsRender = posts.map(p => <Post title={p.title} description={p.description} post={p.post} key={p.id}/>);
 
   return (
     <div className="App">
       <Header/>
-      <PostForm createPost={addPost}/>
+
     </div>
   );
 }
