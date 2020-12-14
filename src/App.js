@@ -8,6 +8,8 @@ import Comment from './Comment';
 import CommentForm from './CommentForm';
 import Post from './Post';
 import PostForm from './PostForm';
+import HomePage from './HomePage';
+import Routes from './Routes';
 
 function App() {
   const [comments, setComments] = useState([]);
@@ -24,7 +26,8 @@ function App() {
   return (
     <div className="App">
       <Header/>
-
+      <HomePage/>
+      <Routes/>
     </div>
   );
 }
