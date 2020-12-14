@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import Post from './Post';
+import PostDetails from './PostDetails';
 
 const FilterPost = ({posts}) => {
     const {id} = useParams();
@@ -8,7 +8,8 @@ const FilterPost = ({posts}) => {
         const currPost = posts.find(
             p => p.id === id
         );
-        return <Post id={currPost}/>;
+
+        return <PostDetails post={currPost}/>;
     }
     return null;
 }

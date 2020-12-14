@@ -1,8 +1,13 @@
 import {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import {useHistory} from 'react-router-dom';
 import './PostForm.css';
+import data from './dummyPosts.json';
 
 const PostForm = ({createPost}) => {
+    
+    const history = useHistory();
+
     const INITIAL_STATE = {
         title: "",
         description: "",
@@ -21,8 +26,10 @@ const PostForm = ({createPost}) => {
 
     const submit = e => {
         e.preventDefault();
-        createPost({...formData, id: uuidv4()});
-        setFormData(INITIAL_STATE);
+        // createPost({...formData, id: uuidv4()});
+        data.push({...formData, id: uuidv4()});
+        history.push("/");
+        // setFormData(INITIAL_STATE);
     };
 
     return(
@@ -54,6 +61,8 @@ const PostForm = ({createPost}) => {
             type="text"
             value={formData.post}
             id="post"
+            rows={5}
+            cols={40}
             />
 <br></br>
 

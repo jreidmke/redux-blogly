@@ -18,7 +18,7 @@ const Routes = () => {
             <Route exact path="/new">
                 <PostForm/>
             </Route>
-            <Route path="/:postId">
+            <Route path="/:id">
                 <FilterPost posts={data}/>
             </Route>
             <Redirect to="/"/>
