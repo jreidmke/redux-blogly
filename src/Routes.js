@@ -1,10 +1,17 @@
 import {Route, Switch, Redirect} from 'react-router-dom';
 
+//components
+import HomePage from './HomePage';
+import Comment from './Comment';
+import CommentForm from './CommentForm';
+import Post from './Post';
+import PostForm from './PostForm';
+
 const Routes = () => {
     return(
         <Switch>
             <Route exact path="/">
-                <HomePage/> {/**Create HomePage Component */}
+                <HomePage/>
             </Route>
             <Route exact path="/new">
                 <PostForm/>
@@ -17,4 +24,4 @@ const Routes = () => {
     )
 }
 
-export default Routes; 
+export default Routes;
