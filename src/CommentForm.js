@@ -21,9 +21,8 @@ const CommentForm = ({addComment, postId, id}) => {//we will be adding a comment
     const submit = e => {
         e.preventDefault();
         // addComment({...formData, id: uuidv4()});
-        const selectedPost = data.find(
-            p=> p.id === postId
-        );
+        const selectedPost = data[postId];
+        console.log(selectedPost);
         selectedPost.comments.push({...formData, id: uuidv4()});
         console.log(selectedPost.comments);
         setFormData(INITIAL_STATE);

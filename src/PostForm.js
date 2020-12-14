@@ -27,7 +27,8 @@ const PostForm = ({createPost}) => {
     const submit = e => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
-        data.push({...formData, id: uuidv4(), comments: []});
+        // data.push({...formData, id: uuidv4(), comments: []});
+        data[uuidv4()] = {...formData, id: uuidv4, comments: []};
         history.push("/");
         // setFormData(INITIAL_STATE);
     };

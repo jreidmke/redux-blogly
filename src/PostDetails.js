@@ -36,8 +36,8 @@ const PostDetails = ({post}) => {
     };
 
     const removePost = (id) => {
-        const postIdx = data.indexOf(data.find(p => p.id === id));
-        data.splice(postIdx, 1);
+        delete data[id];
+        // data.splice(postIdx, 1);
         history.push('/');
     }
 
@@ -80,9 +80,9 @@ const PostDetails = ({post}) => {
     const toggleIsEditing = () => setIsEditing(!isEditing);
 
     const removeComment = (id) => {
-        const p = data.find(p => p.id === post.id);
-        const commentIdx = p.comments.indexOf(p.comments.find(c => c.id === id));
-        p.comments.splice(commentIdx, 1);
+        // const p = data.find(p => p.id === post.id);
+        const commentIdx = data[post.id].comments.indexOf(data[post.id].comments.find(c => c.id === id));
+        data[post.id].comments.splice(commentIdx, 1);
     }
 
 

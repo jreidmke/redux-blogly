@@ -5,10 +5,7 @@ const FilterPost = ({posts}) => {
     const {id} = useParams();
 
     if(id) {
-        const currPost = posts.find(
-            p => p.id === id
-        );
-
+        const currPost = posts[id];
         return <PostDetails post={currPost}/>;
     }
     return null;
