@@ -9,6 +9,7 @@ import Post from './Post';
 import PostForm from './PostForm';
 import FilterPost from './FilterPost';
 import PostDetails from './PostDetails';
+import NewPost from './NewPost';
 
 const Routes = () => {
     return(
@@ -24,6 +25,9 @@ const Routes = () => {
             </Route> */}
             <Route path="/:id">
                 <PostDetails/>
+            </Route>
+            <Route exact path="/new">
+                <NewPost />
             </Route>
             <Redirect to="/"/>
         </Switch>

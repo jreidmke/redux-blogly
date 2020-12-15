@@ -1,5 +1,5 @@
 import './Post.css'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import data from './dummyPosts.json';
 import { v4 as uuidv4 } from 'uuid';
 import {useHistory} from 'react-router-dom';
@@ -8,6 +8,7 @@ import CommentForm from './CommentForm';
 import PostForm from './PostForm';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import {getPostFromDB, editPostInDB, sendPostToDB} from './reducers/posts';
 
 const PostDetails = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -15,7 +16,18 @@ const PostDetails = () => {
 
     const {id} = useParams();
     const post = useSelector(store => store.posts[id]);
+
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function getPost() {
+            await dispatch(getPostFromDB(id));
+        }
+        if(!post) {
+            getPost();
+        }
+    }, [dispatch, post]);
+
 
     // const removePost = (id) => {
     //     delete data[id];
@@ -31,6 +43,21 @@ const PostDetails = () => {
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
 
+    function makeEdits({ title, description, body }) {
+        dispatch(editPostInDB(
+          post.id,
+          title,
+          description,
+          body
+        ));
+        toggleIsEditing();
+      }
+
+    function addPost({ title, description, body }) {
+        dispatch(sendPostToDB(title, description, body));
+        history.push('/');
+    }
+
     const removeComment = (id) => {
         // // const p = data.find(p => p.id === post.id);
         // const commentIdx = data[post.id].comments.indexOf(data[post.id].comments.find(c => c.id === id));
@@ -39,89 +66,27 @@ const PostDetails = () => {
         history.push(`/${post.id}`)
     }
 
+    if(!post) return <p>LOADING RIGHT NOW</p>
+
 
     const details = <div id='post-div'>
         <h1>{post.title}</h1>
         <button onClick={toggleIsEditing}>Edit Post</button>
         <button onClick={() => removePost(post.id)}>Remove Post</button>
         <h4>{post.description}</h4>
-        <p>{post.post}</p>
-        {console.log(post.comments)}
+        <p>{post.body}</p>
         <CommentForm postId={post.id}/>
-        <ul>{post.comments.map(c => <Comment comment={c.comment} id={c.id} postId = {post.id} handleRemove={removeComment}/>)}</ul>
+        <ul>{post.comments.map(c => <Comment comment={c.text} id={c.id} postId = {post.id} handleRemove={removeComment}/>)}</ul>
     </div>
 
 
     return(
         <div id='post-div'>
-            {isEditing ? <PostForm post={post}/> : details}
+            {/* {isLoading ? "...Loading" : details} */}
+            {isEditing ? <PostForm newPost={addPost} edit={makeEdits}/> : details}
         </div>
 
     )
 }
 
 export default PostDetails;
-
-    // const [formData, setFormData] = useState({
-    //     title: post.title,
-    //     description: post.description,
-    //     post: post.post
-    // });
-
-
-    // const handleChange = e => {
-    //     const {name, value} = e.target;
-    //     setFormData(() => ({
-    //         ...formData,
-    //         [name]: value
-    //     }));
-    // };
-
-    // const submit = e => {
-    //     e.preventDefault();
-    //     // createPost({...formData, id: uuidv4()});
-    //     // const postIdx = data.indexOf(data.find(p => p.id === post.id));
-    //     // data.splice(postIdx, 1);
-    //     // const tempId = uuidv4();
-    //     // data.push({...formData, id: tempId, comments: []});
-    //     data[post.id] = {...formData, id: post.id, comments: []};
-    //     history.push(`/${post.id}`);
-    //     setIsEditing(false);
-    //     // setFormData(INITIAL_STATE);
-    // };
-
-    // const f = <div><form onSubmit={submit}>
-    // <label htmlFor="title">Post Title</label>
-    // <input
-    // onChange={handleChange}
-    // name="title"
-    // type="text"
-    // value={formData.title}
-    // id='title'
-    // />
-    // <br></br>
-    // <label htmlFor="description">Post Description</label>
-    // <input
-    // onChange={handleChange}
-    // name="description"
-    // type="text"
-    // value={formData.description}
-    // id="description"
-    // />
-    // <br></br>
-
-    // <label htmlFor="post">Post</label>
-    // <textarea
-    // onChange={handleChange}
-    // name="post"
-    // type="text"
-    // value={formData.post}
-    // id="post"
-    // rows={5}
-    // cols={40}
-    // />
-    // <br></br>
-
-    // <button>Submit</button>
-
-    // </form></div>

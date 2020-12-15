@@ -5,11 +5,10 @@ import './PostForm.css';
 import data from './dummyPosts.json';
 import { useSelector, useDispatch } from 'react-redux';
 
-const PostForm = () => {
+const PostForm = ({edit}) => {
     const { id } = useParams();
     const post = useSelector(store => store.posts[id]);
     const titles = useSelector(store => store.titles);
-    console.log(titles);
 
     const dispatch = useDispatch();
 
@@ -18,12 +17,12 @@ const PostForm = () => {
     const INITIAL_STATE = id ? {
         title: post.title,
         description: post.description,
-        post: post.post
+        body: post.body
     } :
     {
         title: "",
         description: "",
-        post: ""
+        body: ""
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -36,21 +35,30 @@ const PostForm = () => {
         }));
     };
 
+
     const submit = e => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
         // data.push({...formData, id: uuidv4(), comments: []});
-        if(!id) {
-            const newId = uuidv4();
-            dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}});
-            dispatch({type: "ADD_TITLE", post: {...formData, id: newId, comments: []}});
-            data[newId] = {...formData, id: newId, comments: []};
-        } else {
-            dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}});
-            dispatch({type: "EDIT_TITLE", post: {...formData, id: post.id, comments: []}})
+        // if(id) {
+        //     // const newId = uuidv4();
+        //     // dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}});
+        //     // dispatch({type: "ADD_TITLE", post: {...formData, id: newId, comments: []}});
+        //     // data[newId] = {...formData, id: newId, comments: []};
+        //     console.log(typeof edit);
+        //     edit(formData);
 
-            data[post.id] =  {...formData, id: post.id, comments: []};
-        }
+        //     // newPost(formData);
+        // } else {
+        //     // dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}});
+        //     // dispatch({type: "EDIT_TITLE", post: {...formData, id: post.id, comments: []}})
+
+        //     // data[post.id] =  {...formData, id: post.id, comments: []};
+        //     console.log(typeof edit);
+        //     // newPost(formData);
+        // }
+        
+        edit(formData);
         history.push("/");
         setFormData(INITIAL_STATE);
     };
@@ -77,13 +85,13 @@ const PostForm = () => {
             />
 <br></br>
 
-            <label htmlFor="post">Post</label>
+            <label htmlFor="body">Post</label>
             <textarea
             onChange={handleChange}
-            name="post"
+            name="body"
             type="text"
-            value={formData.post}
-            id="post"
+            value={formData.body}
+            id="body"
             rows={5}
             cols={40}
             />
