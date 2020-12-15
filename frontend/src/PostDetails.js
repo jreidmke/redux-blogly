@@ -25,6 +25,7 @@ const PostDetails = () => {
 
     const removePost = (id) => {
         dispatch({ type: "REMOVE_POST", post: {id: id}});
+        dispatch({ type: 'REMOVE_TITLE', post: {id: id}});
         history.push('/');
     }
 

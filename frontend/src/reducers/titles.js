@@ -21,6 +21,10 @@ function titles(state = INITIAL_STATE, action) {
             console.log(titles);
             return titles;
 
+        case 'REMOVE_TITLE':
+            console.log(state.filter(t => t.id !== action.post.id));
+            return state.filter(t => t.id !== action.post.id)
+
 
         default:
             return state;
