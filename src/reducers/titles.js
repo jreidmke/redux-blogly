@@ -7,11 +7,9 @@ function makeTitles(data) {
     const titleArr = postKeys.map(key => ({title: data[key].title, id: data[key].id}));
     return titleArr;
 }
-const INITIAL_STATE = {titles: makeTitles(data)};
+const INITIAL_STATE = makeTitles(data);
 
-console.log(INITIAL_STATE);
-
-function titleList(state = INITIAL_STATE, action) {
+function titles(state = INITIAL_STATE, action) {
     switch(action.type) {
         case 'SHOW_TITLES':
             return([...state.titles])
@@ -21,4 +19,4 @@ function titleList(state = INITIAL_STATE, action) {
     }
 }
 
-export default titleList;
+export default titles;

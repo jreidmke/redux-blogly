@@ -4,15 +4,13 @@ import data from './dummyPosts.json';
 import { useSelector, useDispatch } from "react-redux";
 
 const PostList = () => {
-    const titles = useSelector(store => store);
-    console.log(titles);
-    // const dispatch = useDispatch();
-    // const t =
-
-    const postKeys = Object.keys(data);
+    const titles = useSelector(store => store.titles);
+    // console.log(titles);
+    // // // const dispatch = useDispatch();
+    // // // const t =
     return(
         <ul>
-            {postKeys.map(key => <li key={key}><Link to={`/${key}`}><Post title={data[key].title} key={key}/></Link></li>)}
+            {titles.map(t => <li key={t.id}><Link to={`/${t.id}`}><Post title={t.title} key={t.id}/></Link></li>)}
         </ul>
     )
 }
