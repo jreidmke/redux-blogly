@@ -15,19 +15,27 @@ const PostDetails = () => {
 
     const {id} = useParams();
     const post = useSelector(store => store.posts[id]);
+    const dispatch = useDispatch();
+
+    // const removePost = (id) => {
+    //     delete data[id];
+    //     // data.splice(postIdx, 1);
+    //     history.push('/');
+    // }
 
     const removePost = (id) => {
-        delete data[id];
-        // data.splice(postIdx, 1);
+        dispatch({ type: "REMOVE_POST", post: {id: id}});
         history.push('/');
     }
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
 
     const removeComment = (id) => {
-        // const p = data.find(p => p.id === post.id);
-        const commentIdx = data[post.id].comments.indexOf(data[post.id].comments.find(c => c.id === id));
-        data[post.id].comments.splice(commentIdx, 1);
+        // // const p = data.find(p => p.id === post.id);
+        // const commentIdx = data[post.id].comments.indexOf(data[post.id].comments.find(c => c.id === id));
+        // data[post.id].comments.splice(commentIdx, 1);
+        dispatch({ type: "REMOVE_COMMENT", commentId: id, postId: post.id});
+        history.push(`/${post.id}`)
     }
 
 
@@ -37,6 +45,7 @@ const PostDetails = () => {
         <button onClick={() => removePost(post.id)}>Remove Post</button>
         <h4>{post.description}</h4>
         <p>{post.post}</p>
+        {console.log(post.comments)}
         <CommentForm postId={post.id}/>
         <ul>{post.comments.map(c => <Comment comment={c.comment} id={c.id} postId = {post.id} handleRemove={removeComment}/>)}</ul>
     </div>

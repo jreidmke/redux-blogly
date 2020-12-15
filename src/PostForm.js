@@ -3,18 +3,24 @@ import { v4 as uuidv4 } from 'uuid';
 import {useHistory, useParams} from 'react-router-dom';
 import './PostForm.css';
 import data from './dummyPosts.json';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const PostForm = () => {
     const { id } = useParams();
     const post = useSelector(store => store.posts[id]);
+    const dispatch = useDispatch();
 
     const history = useHistory();
 
-    const INITIAL_STATE = {
-        title: post.title || "",
-        description: post.description || "",
-        post: post.post || ""
+    const INITIAL_STATE = id ? {
+        title: post.title,
+        description: post.description,
+        post: post.post
+    } :
+    {
+        title: "",
+        description: "",
+        post: ""
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -31,7 +37,7 @@ const PostForm = () => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
         // data.push({...formData, id: uuidv4(), comments: []});
-        if(Object.keys(post).length === 0) {
+        if(!id) {
             //IF WERE MAKING A NEW POST
 
             //PROBABLY GONNA HAVE AN ACTION TYPE "ADD_POST"
@@ -43,6 +49,7 @@ const PostForm = () => {
             //UGH
 
             const newId = uuidv4();
+            dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}})
             data[newId] = {...formData, id: newId, comments: []};
         } else {
             //IF WERE JUST EDITING THE POST
@@ -52,7 +59,7 @@ const PostForm = () => {
             //SUBMIT FORM DATA
 
             //THEN WE'LL TAKE A LOOK.
-
+            dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}})
             data[post.id] =  {...formData, id: post.id, comments: []};
         }
         history.push("/");
