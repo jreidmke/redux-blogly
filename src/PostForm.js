@@ -4,14 +4,14 @@ import {useHistory} from 'react-router-dom';
 import './PostForm.css';
 import data from './dummyPosts.json';
 
-const PostForm = ({createPost}) => {
+const PostForm = ({createPost, post = {}}) => {
 
     const history = useHistory();
 
     const INITIAL_STATE = {
-        title: "",
-        description: "",
-        post: ""
+        title: post.title || "",
+        description: post.description || "",
+        post: post.post || ""
     };
 
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -28,7 +28,12 @@ const PostForm = ({createPost}) => {
         e.preventDefault();
         // createPost({...formData, id: uuidv4()});
         // data.push({...formData, id: uuidv4(), comments: []});
-        data[uuidv4()] = {...formData, id: uuidv4, comments: []};
+        if(Object.keys(post).length === 0) {
+            const newId = uuidv4();
+            data[newId] = {...formData, id: newId, comments: []};
+        } else {
+            data[post.id] =  {...formData, id: post.id, comments: []};
+        }
         history.push("/");
         // setFormData(INITIAL_STATE);
     };

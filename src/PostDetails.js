@@ -5,36 +5,39 @@ import { v4 as uuidv4 } from 'uuid';
 import {useHistory} from 'react-router-dom';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
+import PostForm from './PostForm';
 
 const PostDetails = ({post}) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        title: post.title,
-        description: post.description,
-        post: post.post
-    });
+
+    // const [formData, setFormData] = useState({
+    //     title: post.title,
+    //     description: post.description,
+    //     post: post.post
+    // });
+
     const history = useHistory();
 
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setFormData(() => ({
-            ...formData,
-            [name]: value
-        }));
-    };
+    // const handleChange = e => {
+    //     const {name, value} = e.target;
+    //     setFormData(() => ({
+    //         ...formData,
+    //         [name]: value
+    //     }));
+    // };
 
-    const submit = e => {
-        e.preventDefault();
-        // createPost({...formData, id: uuidv4()});
-        // const postIdx = data.indexOf(data.find(p => p.id === post.id));
-        // data.splice(postIdx, 1);
-        // const tempId = uuidv4();
-        // data.push({...formData, id: tempId, comments: []});
-        data[post.id] = {...formData, id: post.id, comments: []};
-        history.push(`/${post.id}`);
-        setIsEditing(false);
-        // setFormData(INITIAL_STATE);
-    };
+    // const submit = e => {
+    //     e.preventDefault();
+    //     // createPost({...formData, id: uuidv4()});
+    //     // const postIdx = data.indexOf(data.find(p => p.id === post.id));
+    //     // data.splice(postIdx, 1);
+    //     // const tempId = uuidv4();
+    //     // data.push({...formData, id: tempId, comments: []});
+    //     data[post.id] = {...formData, id: post.id, comments: []};
+    //     history.push(`/${post.id}`);
+    //     setIsEditing(false);
+    //     // setFormData(INITIAL_STATE);
+    // };
 
     const removePost = (id) => {
         delete data[id];
@@ -42,41 +45,41 @@ const PostDetails = ({post}) => {
         history.push('/');
     }
 
-    const f = <div><form onSubmit={submit}>
-    <label htmlFor="title">Post Title</label>
-    <input
-    onChange={handleChange}
-    name="title"
-    type="text"
-    value={formData.title}
-    id='title'
-    />
-    <br></br>
-    <label htmlFor="description">Post Description</label>
-    <input
-    onChange={handleChange}
-    name="description"
-    type="text"
-    value={formData.description}
-    id="description"
-    />
-    <br></br>
+    // const f = <div><form onSubmit={submit}>
+    // <label htmlFor="title">Post Title</label>
+    // <input
+    // onChange={handleChange}
+    // name="title"
+    // type="text"
+    // value={formData.title}
+    // id='title'
+    // />
+    // <br></br>
+    // <label htmlFor="description">Post Description</label>
+    // <input
+    // onChange={handleChange}
+    // name="description"
+    // type="text"
+    // value={formData.description}
+    // id="description"
+    // />
+    // <br></br>
 
-    <label htmlFor="post">Post</label>
-    <textarea
-    onChange={handleChange}
-    name="post"
-    type="text"
-    value={formData.post}
-    id="post"
-    rows={5}
-    cols={40}
-    />
-    <br></br>
+    // <label htmlFor="post">Post</label>
+    // <textarea
+    // onChange={handleChange}
+    // name="post"
+    // type="text"
+    // value={formData.post}
+    // id="post"
+    // rows={5}
+    // cols={40}
+    // />
+    // <br></br>
 
-    <button>Submit</button>
+    // <button>Submit</button>
 
-    </form></div>
+    // </form></div>
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
 
@@ -100,7 +103,7 @@ const PostDetails = ({post}) => {
 
     return(
         <div id='post-div'>
-            {isEditing ? f : details}
+            {isEditing ? <PostForm post={post}/> : details}
         </div>
 
     )
