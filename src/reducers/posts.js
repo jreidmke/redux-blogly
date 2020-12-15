@@ -2,7 +2,7 @@
 
 import data from './../dummyPosts.json';
 
-function posts(state = data, action) {
+function posts(state = {}, action) {
     console.log(state);
     let p = state[action.postId];
 
@@ -12,7 +12,8 @@ function posts(state = data, action) {
 
         case 'EDIT_POST':
             console.log(action.post);
-            return {...state, post: action.post}
+            console.log({...state, [action.post.id]: {...action.post, comments: []}})
+            return {...state, [action.post.id]: {...action.post, comments: []}}
 
         case 'ADD_POST':
             console.log(action.post);

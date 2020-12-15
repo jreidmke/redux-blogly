@@ -8,6 +8,9 @@ import { useSelector, useDispatch } from 'react-redux';
 const PostForm = () => {
     const { id } = useParams();
     const post = useSelector(store => store.posts[id]);
+    const titles = useSelector(store => store.titles);
+    console.log(titles);
+
     const dispatch = useDispatch();
 
     const history = useHistory();
@@ -38,32 +41,18 @@ const PostForm = () => {
         // createPost({...formData, id: uuidv4()});
         // data.push({...formData, id: uuidv4(), comments: []});
         if(!id) {
-            //IF WERE MAKING A NEW POST
-
-            //PROBABLY GONNA HAVE AN ACTION TYPE "ADD_POST"
-
-            //AND WE"LL ADD IT TO ALL THE POSTS
-
-            //SOUNDS LIKE WE"LL HAVE TO GET TITLE IN HERE TOO
-
-            //UGH
-
             const newId = uuidv4();
-            dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}})
+            dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}});
+            dispatch({type: "ADD_TITLE", post: {...formData, id: newId, comments: []}});
             data[newId] = {...formData, id: newId, comments: []};
         } else {
-            //IF WERE JUST EDITING THE POST
+            dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}});
+            dispatch({type: "EDIT_TITLE", post: {...formData, id: post.id, comments: []}})
 
-            //SO ACTION TYPE EDIT_POST
-
-            //SUBMIT FORM DATA
-
-            //THEN WE'LL TAKE A LOOK.
-            dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}})
             data[post.id] =  {...formData, id: post.id, comments: []};
         }
         history.push("/");
-        // setFormData(INITIAL_STATE);
+        setFormData(INITIAL_STATE);
     };
 
     return(
