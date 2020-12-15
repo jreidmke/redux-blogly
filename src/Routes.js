@@ -8,6 +8,7 @@ import CommentForm from './CommentForm';
 import Post from './Post';
 import PostForm from './PostForm';
 import FilterPost from './FilterPost';
+import PostDetails from './PostDetails';
 
 const Routes = () => {
     return(
@@ -18,8 +19,11 @@ const Routes = () => {
             <Route exact path="/new">
                 <PostForm/>
             </Route>
-            <Route path="/:id">
+            {/* <Route path="/:id">
                 <FilterPost posts={data}/>
+            </Route> */}
+            <Route path="/:id">
+                <PostDetails/>
             </Route>
             <Redirect to="/"/>
         </Switch>
