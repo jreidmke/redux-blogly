@@ -12,7 +12,10 @@ const INITIAL_STATE = makeTitles(data);
 function titles(state = INITIAL_STATE, action) {
     switch(action.type) {
         case 'SHOW_TITLES':
-            return([...state.titles])
+            return(state)
+
+        case 'ADD_TITLE':
+            return([...state, action.post]);
 
         default:
             return state;

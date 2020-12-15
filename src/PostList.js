@@ -1,10 +1,13 @@
 import {Link} from 'react-router-dom';
 import Post from './Post';
 import data from './dummyPosts.json';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const PostList = () => {
     const titles = useSelector(store => store.titles);
+    // const dispatch = useDispatch();
+    // const display = dispatch({type: 'SHOW_TITLES'});
+    // console.log(display);
     // console.log(titles);
     // // // const dispatch = useDispatch();
     // // // const t =
