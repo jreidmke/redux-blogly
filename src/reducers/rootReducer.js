@@ -1,4 +1,4 @@
-import titleList from './titleList';
+import titles from './titles';
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({titleList});
