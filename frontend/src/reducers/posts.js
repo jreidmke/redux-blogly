@@ -101,6 +101,20 @@ function deleteComment(postId, commentId) {
     };
 }
 
+function sendVoteToDB(id, direction) {
+    return async function(dispatch) {
+        const resp = await axios.post(`${API_URL}/${id}/vote/${direction}`);
+        return dispatch(vote(id, resp.data.votes));
+    };
+}
+
+function vote(postId, votes) {
+    return {
+        type: 'VOTE',
+        postId,
+        votes
+    }
+}
 
 function posts(state = {}, action) {
     // console.log(state);
@@ -142,6 +156,9 @@ function posts(state = {}, action) {
             // console.log({...state, [action.postId]: {...p, comments: p.comments.filter(c => c.id !== action.commentId)}});
             return {...state, [action.postId]: {...p, comments: p.comments.filter(c => c.id !== action.commentId)}};
 
+        case 'VOTE':
+            return {...state, [action.postId]: {...p, votes: action.votes}};
+
         default:
             // console.log(state);
             return state;
@@ -149,4 +166,4 @@ function posts(state = {}, action) {
 }
 
 export default posts;
-export {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB, addCommentToDB, deleteCommentFromDB};
+export {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB, addCommentToDB, deleteCommentFromDB, sendVoteToDB};

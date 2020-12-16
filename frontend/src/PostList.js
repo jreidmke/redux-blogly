@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import Post from './Post';
 import {getTitlesFromDB} from './reducers/titles';
+import {sendVoteToDB} from './reducers/posts';
 import {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import './PostList.css';
@@ -22,10 +23,19 @@ const PostList = () => {
 
     if (isLoading) return <b>Gathering Posts</b>;
 
+    function vote(direction, id) {
+        dispatch(sendVoteToDB(id, direction));
+    }
 
     return(
         <ul>
-            {titles.map(t => <li key={t.id}><button>UPVOTE</button><Link to={`/${t.id}`}><Post title={t.title} key={t.id} votes={t.votes}/></Link><button>DOWNVOTE</button></li>)}
+            {titles.map(t =>
+            <li key={t.id}>
+                <button onClick={() => vote('up', t.id)}>UPVOTE</button>
+                <Link to={`/${t.id}`}>
+                <Post title={t.title} key={t.id} votes={t.votes}/></Link>
+                <button onClick={() => vote('down', t.id)}>DOWNVOTE</button>
+            </li>)}
         </ul>
     )
 }
