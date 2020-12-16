@@ -3,6 +3,7 @@ import Post from './Post';
 import {getTitlesFromDB} from './reducers/titles';
 import {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import './PostList.css';
 
 const PostList = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ const PostList = () => {
 
     return(
         <ul>
-            {titles.map(t => <li key={t.id}><Link to={`/${t.id}`}><Post title={t.title} key={t.id}/></Link></li>)}
+            {titles.map(t => <li key={t.id}><button>UPVOTE</button><Link to={`/${t.id}`}><Post title={t.title} key={t.id} votes={t.votes}/></Link><button>DOWNVOTE</button></li>)}
         </ul>
     )
 }
