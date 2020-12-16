@@ -18,6 +18,7 @@ function getTitlesFromDB() {
 };
 
 function getTitles(titles) {
+    console.log(titles);
     return {
         type: 'SHOW_TITLES',
         titles

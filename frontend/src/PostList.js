@@ -1,21 +1,26 @@
 import {Link} from 'react-router-dom';
 import Post from './Post';
 import {getTitlesFromDB} from './reducers/titles';
-import {useEffect} from 'react';
-
-import data from './dummyPosts.json';
+import {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 const PostList = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const titles = useSelector(store => store.titles);
     const dispatch = useDispatch();
 
     useEffect(() => {
         async function getTitles() {
             await dispatch(getTitlesFromDB());
+            setIsLoading(false);
         }
-        getTitles();
-    }, [dispatch]);
+        if(isLoading) {
+            setTimeout(getTitles, 50);
+        }
+    }, [dispatch, isLoading]);
+
+    if (isLoading) return <b>Gathering Posts</b>;
+
 
     return(
         <ul>

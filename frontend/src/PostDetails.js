@@ -8,7 +8,7 @@ import CommentForm from './CommentForm';
 import PostForm from './PostForm';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {getPostFromDB, editPostInDB, sendPostToDB} from './reducers/posts';
+import {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB} from './reducers/posts';
 
 const PostDetails = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -30,15 +30,15 @@ const PostDetails = () => {
 
 
     // const removePost = (id) => {
-    //     delete data[id];
-    //     // data.splice(postIdx, 1);
+    //     dispatch({ type: "REMOVE_POST", post: {id: id}});
+    //     dispatch({ type: 'REMOVE_TITLE', post: {id: id}});
     //     history.push('/');
     // }
 
-    const removePost = (id) => {
-        dispatch({ type: "REMOVE_POST", post: {id: id}});
-        dispatch({ type: 'REMOVE_TITLE', post: {id: id}});
-        history.push('/');
+    function removePost(e) {
+        dispatch(removePostFromDB(post.id));
+        // setTimeout(history.push('/'), 2000);
+        history.push('/')
     }
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
@@ -72,7 +72,7 @@ const PostDetails = () => {
     const details = <div id='post-div'>
         <h1>{post.title}</h1>
         <button onClick={toggleIsEditing}>Edit Post</button>
-        <button onClick={() => removePost(post.id)}>Remove Post</button>
+        <button onClick={removePost}>Remove Post</button>
         <h4>{post.description}</h4>
         <p>{post.body}</p>
         <CommentForm postId={post.id}/>
@@ -82,11 +82,26 @@ const PostDetails = () => {
 
     return(
         <div id='post-div'>
-            {/* {isLoading ? "...Loading" : details} */}
-            {isEditing ? <PostForm newPost={addPost} edit={makeEdits}/> : details}
+            {isEditing ? <PostForm edit={makeEdits}/> : details}
         </div>
 
     )
 }
 
 export default PostDetails;
+
+
+            {/* {isLoading ? "...Loading" : details} */}
+    // const removePost = (id) => {
+    //     delete data[id];
+    //     // data.splice(postIdx, 1);
+    //     history.push('/');
+    // }
+
+    // const removeComment = (id) => {
+    //     // // const p = data.find(p => p.id === post.id);
+    //     // const commentIdx = data[post.id].comments.indexOf(data[post.id].comments.find(c => c.id === id));
+    //     // data[post.id].comments.splice(commentIdx, 1);
+    //     dispatch({ type: "REMOVE_COMMENT", commentId: id, postId: post.id});
+    //     history.push(`/${post.id}`)
+    // }

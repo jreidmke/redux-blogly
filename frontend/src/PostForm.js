@@ -57,10 +57,8 @@ const PostForm = ({edit}) => {
         //     console.log(typeof edit);
         //     // newPost(formData);
         // }
-        
+
         edit(formData);
-        history.push("/");
-        setFormData(INITIAL_STATE);
     };
 
     return(

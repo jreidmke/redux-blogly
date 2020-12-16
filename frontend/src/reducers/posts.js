@@ -56,6 +56,21 @@ function addPost(post) {
     }
 }
 
+function removePostFromDB(id) {
+    return async function (dispatch) {
+        await axios.delete(`${API_URL}/${id}`);
+        return dispatch(removePost(id));
+    }
+}
+
+function removePost(id) {
+    return {
+        type: 'REMOVE_POST',
+        id
+    };
+}
+
+
 function posts(state = {}, action) {
     // console.log(state);
     let p = state[action.postId];
@@ -80,7 +95,7 @@ function posts(state = {}, action) {
         case 'REMOVE_POST':
             // console.log(action.post);
             let posts = {...state};
-            delete posts[action.post.id];
+            delete posts[action.id];
             // console.log(posts);
             return posts;
 
@@ -105,4 +120,4 @@ function posts(state = {}, action) {
 }
 
 export default posts;
-export {getPostFromDB, editPostInDB, sendPostToDB};
+export {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB};
