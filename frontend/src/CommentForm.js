@@ -5,11 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const CommentForm = ({addComment, postId, id}) => {//we will be adding a comment to the comment state on our Post component
     const INITIAL_STATE = {
-        comment: ""
+        text: ""
     };
 
     const post = useSelector(store => store.posts[postId]);
-    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(INITIAL_STATE);
 
@@ -27,18 +26,19 @@ const CommentForm = ({addComment, postId, id}) => {//we will be adding a comment
         // const selectedPost = data[postId];
         // console.log(postId);
         // selectedPost.comments.push({...formData, id: uuidv4()});
-        dispatch({ type: 'ADD_COMMENT', comment: {...formData, id: uuidv4()}, postId: postId});
+        // dispatch({ type: 'ADD_COMMENT', comment: {...formData, id: uuidv4()}, postId: postId});
+        addComment(formData);
         setFormData(INITIAL_STATE);
     }
 
     return(
         <form onSubmit={submit}>
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="text">Comment</label>
             <input
             onChange={handleChange}
             type='text'
-            name='comment'
-            value={formData.comment}
+            name='text'
+            value={formData.text}
             />
             <button>Submit Comment</button>
         </form>

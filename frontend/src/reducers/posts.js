@@ -70,6 +70,38 @@ function removePost(id) {
     };
 }
 
+function addCommentToDB(postId, text) {
+    console.log(text);
+    console.log(postId);
+    return async function (dispatch) {
+        const resp = await axios.post(`${API_URL}/${postId}/comments/`, { text });
+        return dispatch(addComment(postId, resp.data));
+    }
+}
+
+function addComment(postId, text) {
+    return {
+        type: "ADD_COMMENT",
+        postId,
+        text
+    };
+};
+
+function deleteCommentFromDB(postId, commentId) {
+    return async function (dispatch) {
+        await axios.delete(`${API_URL}/${postId}/comments/${commentId}`);
+        return dispatch(deleteComment(postId, commentId));
+      };
+}
+
+function deleteComment(postId, commentId) {
+    return {
+        type: 'REMOVE_COMMENT',
+        postId,
+        commentId
+    };
+}
+
 
 function posts(state = {}, action) {
     // console.log(state);
@@ -101,16 +133,14 @@ function posts(state = {}, action) {
 
         case 'ADD_COMMENT':
             // console.log(action.comment);
-            let po = {...state, [action.postId]: {...p, comments: [...p.comments, action.comment]}};
-            // console.log(po);
+            // console.log({...state, [action.postId]: {...p, comments: [...p.comments, action.comment]});
             return {...state, [action.postId]: {...p, comments: [...p.comments, action.comment]}};
 
         case 'REMOVE_COMMENT':
             // console.log(action.commentId);
             // console.log(action.postId);
             // console.log(state);
-            let pos = {...state, [action.postId]: {...p, comments: p.comments.filter(c => c.id !== action.commentId)}};
-            // console.log(pos);
+            // console.log({...state, [action.postId]: {...p, comments: p.comments.filter(c => c.id !== action.commentId)}});
             return {...state, [action.postId]: {...p, comments: p.comments.filter(c => c.id !== action.commentId)}};
 
         default:
@@ -120,4 +150,4 @@ function posts(state = {}, action) {
 }
 
 export default posts;
-export {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB};
+export {getPostFromDB, editPostInDB, sendPostToDB, removePostFromDB, addCommentToDB, deleteCommentFromDB};
