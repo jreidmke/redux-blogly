@@ -69,7 +69,7 @@ const PostDetails = () => {
 
     return(
         <div id='post-div'>
-            {isEditing ? <PostForm edit={makeEdits}/> : details}
+            {isEditing ? <PostForm save={makeEdits}/> : details}
         </div>
 
     )

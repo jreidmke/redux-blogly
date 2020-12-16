@@ -3,16 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import {useHistory, useParams} from 'react-router-dom';
 import './PostForm.css';
 import data from './dummyPosts.json';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const PostForm = ({edit}) => {
+const PostForm = ({save}) => {
     const { id } = useParams();
     const post = useSelector(store => store.posts[id]);
-    const titles = useSelector(store => store.titles);
-
-    const dispatch = useDispatch();
-
-    const history = useHistory();
 
     const INITIAL_STATE = id ? {
         title: post.title,
@@ -38,27 +33,8 @@ const PostForm = ({edit}) => {
 
     const submit = e => {
         e.preventDefault();
-        // createPost({...formData, id: uuidv4()});
-        // data.push({...formData, id: uuidv4(), comments: []});
-        // if(id) {
-        //     // const newId = uuidv4();
-        //     // dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}});
-        //     // dispatch({type: "ADD_TITLE", post: {...formData, id: newId, comments: []}});
-        //     // data[newId] = {...formData, id: newId, comments: []};
-        //     console.log(typeof edit);
-        //     edit(formData);
-
-        //     // newPost(formData);
-        // } else {
-        //     // dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}});
-        //     // dispatch({type: "EDIT_TITLE", post: {...formData, id: post.id, comments: []}})
-
-        //     // data[post.id] =  {...formData, id: post.id, comments: []};
-        //     console.log(typeof edit);
-        //     // newPost(formData);
-        // }
-
-        edit(formData);
+        console.log(formData);
+        save(formData);
     };
 
     return(
@@ -102,3 +78,23 @@ const PostForm = ({edit}) => {
 }
 
 export default PostForm;
+
+        // createPost({...formData, id: uuidv4()});
+        // data.push({...formData, id: uuidv4(), comments: []});
+        // if(id) {
+        //     // const newId = uuidv4();
+        //     // dispatch({type: 'ADD_POST', post: {...formData, id: newId, comments: []}});
+        //     // dispatch({type: "ADD_TITLE", post: {...formData, id: newId, comments: []}});
+        //     // data[newId] = {...formData, id: newId, comments: []};
+        //     console.log(typeof edit);
+        //     edit(formData);
+
+        //     // newPost(formData);
+        // } else {
+        //     // dispatch({type: "EDIT_POST", post: {...formData, id: post.id, comments: []}});
+        //     // dispatch({type: "EDIT_TITLE", post: {...formData, id: post.id, comments: []}})
+
+        //     // data[post.id] =  {...formData, id: post.id, comments: []};
+        //     console.log(typeof edit);
+        //     // newPost(formData);
+        // }

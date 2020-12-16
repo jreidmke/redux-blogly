@@ -36,7 +36,6 @@ function editPost(post) {
 }
 
 function sendPostToDB(title, description, body) {
-    console.log(title)
     return async function(dispatch) {
         const resp = await axios.post(`${API_URL}`, {
             title,

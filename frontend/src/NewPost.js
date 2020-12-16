@@ -9,25 +9,15 @@ import PostForm from "./PostForm";
 function NewPost() {
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  /** Adds post and saves to backend. */
-
-  function add({ title, description, body }) {
+  function createPost({ title, description, body }) {
     dispatch(sendPostToDB(title, description, body));
-    history.push("/");
-  }
-
-  /** Cancel (redirect) */
-
-  function cancel() {
-    history.push("/");
   }
 
   return (
     <main>
       <h1>New Post</h1>
-      <PostForm edit={add} cancel={cancel} />
+      <PostForm save={createPost}/>
     </main>
   );
 }
